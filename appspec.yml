@@ -9,9 +9,6 @@ hooks:
       timeout: 300
       runas: root
   AfterInstall:
-    - location: scripts/reconcileFolders.sh
-      timeout: 300
-      runas: root
     - location: scripts/resetPermissions.sh
       timeout: 300
       runas: root
