@@ -24,3 +24,12 @@ jobs:
             --deployment-group-name TestDeploymentGroup \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+    # Step 3
+      - name: Create CodeDeploy Deployment2
+        id: deploy1
+        run: |
+          aws deploy create-deployment \
+            --application-name Test-CodeDeploy \
+            --deployment-group-name Test2DeploymentGroup \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
