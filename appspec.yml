@@ -9,7 +9,7 @@ hooks:
       timeout: 300
       runas: root
   AfterInstall:
-    - location: scripts/resetPermissions.sh
+    - location: scripts/resetPermission.sh
       timeout: 300
       runas: root
   ApplicationStart:
