@@ -1,0 +1,37 @@
+version: 0.0
+os: linux
+files:
+  - source: ./
+    destination: /var/www
+permissions:
+  - object: /var/www
+    pattern: "*"
+    owner: nginx
+    group: nginx
+    mode: 644
+    type:
+      - file
+  - object: /var/www
+    pattern: "*"
+    owner: nginx
+    group: nginx
+    mode: 2775
+    type:
+      - directory
+hooks:
+  BeforeInstall:
+    - location: scripts/cleanDirectory.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/onApplicationStart.sh
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/onApplicationStop.sh
+      timeout: 300
+      runas: root
+  ValidateService:
+    - location: scripts/onValidateService.sh
+      timeout: 300
+      runas: root
