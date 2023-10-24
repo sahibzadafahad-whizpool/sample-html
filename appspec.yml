@@ -3,24 +3,16 @@ os: linux
 files:
   - source: ./
     destination: /var/www
-permissions:
-  - object: /var/www
-    pattern: "*"
-    owner: nginx
-    group: nginx
-    mode: 644
-    type:
-      - file
-  - object: /var/www
-    pattern: "*"
-    owner: nginx
-    group: nginx
-    mode: 2775
-    type:
-      - directory
 hooks:
   BeforeInstall:
     - location: scripts/cleanDirectory.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/reconcileFolders.sh
+      timeout: 300
+      runas: root
+    - location: scripts/resetPermissions.sh
       timeout: 300
       runas: root
   ApplicationStart:
