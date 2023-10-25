@@ -50,7 +50,7 @@ jobs:
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
   Deploy-Web-ASG:
     runs-on: ubuntu-latest
-    needs: [Check-PHP-Syntax,Temporary-Server-Deployment]
+    needs: [Check-PHP-Syntax,Deploy-Utility]
     if: github.ref == 'refs/heads/main'
     steps:
      # Step 1
