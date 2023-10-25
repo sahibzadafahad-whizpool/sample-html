@@ -24,7 +24,7 @@ jobs:
           composer require --dev php-parallel-lint/php-console-highlighter
       - name: Check PHP Syntax
         run: |
-          vendor/bin/parallel-lint --exclude .git --exclude vendor .
+          sh vendor/bin/parallel-lint --exclude .git --exclude vendor .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     needs: [Check-PHP-Syntax]
