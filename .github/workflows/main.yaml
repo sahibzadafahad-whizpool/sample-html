@@ -90,11 +90,7 @@ jobs:
       - name: Handle Failure
         uses: nothingalike/sns-publish-topic@v1.6
         with:
-          Scripts: |
-            commit_id=$GITHUB_SHA
-            repo_url="https://github.com/${GITHUB_REPOSITORY}/commit/${commit_id}"
-          MESSAGE: | 
-            "GitHub action is failed to deploy the code $repo_url"
+          MESSAGE: "GitHub action is failed to deploy the code"
           TOPIC_ARN: ${{ secrets.AWS_SNS_ARN }}
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
