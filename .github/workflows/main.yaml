@@ -4,7 +4,7 @@ on:
     branches: [ main ]
 
 jobs:
-  continuous-deployment:
+  Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -24,4 +24,38 @@ jobs:
             --deployment-group-name TestDeploymentGroup \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+  WEB-ASG-DEPLOYMENT:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+     # Step 1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+    # Step 2
+      - name: Create CodeDeploy Deployment
+        id: deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name Test-CodeDeploy \
+            --deployment-group-name TestDeployment2Group \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+  success:
+    runs-on: ubuntu-latest
+    needs: [Temporary-Server-Deployment,WEB-ASG-DEPLOYMENT]
+    steps:
+    - name: Success Message
+      uses: nothingalike/sns-publish-topic@v1.6
+      with:
+        MESSAGE: "Code is Deployed"
+        TOPIC_ARN: ${{ AWS_SNS_ARN }}
+      env:
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
 
