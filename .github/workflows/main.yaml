@@ -84,13 +84,13 @@ jobs:
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   php-syntax-fail-alert:
     runs-on: ubuntu-latest
-    needs: [Success]
-    if: Success()
+    needs: [Check-PHP-Syntax]
+    if: Failure()
     steps:
       - name: Handle Failure
         uses: nothingalike/sns-publish-topic@v1.6
         with:
-          MESSAGE: "code if success triggered"
+          MESSAGE: "Pipeline failed at Check-PHP-Syntax stage"
           TOPIC_ARN: ${{ secrets.AWS_SNS_ARN }}
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
