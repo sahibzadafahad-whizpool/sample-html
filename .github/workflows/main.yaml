@@ -27,6 +27,7 @@ jobs:
           vendor/bin/parallel-lint --exclude .git --exclude vendor .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
+    needs: [Check-PHP-Syntax]
     if: github.ref == 'refs/heads/main'
     steps:
      # Step 1
@@ -47,6 +48,7 @@ jobs:
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
   WEB-ASG-DEPLOYMENT:
     runs-on: ubuntu-latest
+    needs: [Check-PHP-Syntax]
     if: github.ref == 'refs/heads/main'
     steps:
      # Step 1
@@ -67,7 +69,7 @@ jobs:
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
   Success:
     runs-on: ubuntu-latest
-    needs: [Temporary-Server-Deployment,WEB-ASG-DEPLOYMENT]
+    needs: [Check-PHP-Syntax,Temporary-Server-Deployment,WEB-ASG-DEPLOYMENT,]
     steps:
     - name: Success Message
       uses: nothingalike/sns-publish-topic@v1.6
