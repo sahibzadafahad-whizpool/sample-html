@@ -21,9 +21,10 @@ jobs:
           php -r "unlink('composer-setup.php');"
           mv composer.phar /usr/local/bin/composer
           composer --version
+          composer require --dev php-parallel-lint/php-console-highlighter
       - name: Check PHP Syntax
         run: |
-          php -l .
+          vendor/bin/parallel-lint --exclude .git --exclude vendor .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
