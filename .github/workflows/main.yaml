@@ -21,10 +21,12 @@ jobs:
           php -r "unlink('composer-setup.php');"
           mv composer.phar /usr/local/bin/composer
           composer --version
-          composer install
+      - name: Install PHP Parallel Lint
+        run: |
+           composer require jakub-onderka/php-parallel-lint
       - name: Check PHP Syntax
         run: |
-           sh vendor/bin/parallel-lint .
+          vendor/bin/parallel-lint .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     needs: [Check-PHP-Syntax]
