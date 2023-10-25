@@ -24,7 +24,7 @@ jobs:
           composer install
       - name: Check PHP Syntax
         run: |
-           sh vendor/bin/parallel-lint
+           sh vendor/bin/parallel-lint .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     needs: [Check-PHP-Syntax]
