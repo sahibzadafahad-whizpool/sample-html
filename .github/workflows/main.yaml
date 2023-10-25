@@ -21,7 +21,7 @@ jobs:
           php -r "unlink('composer-setup.php');"
           mv composer.phar /usr/local/bin/composer
           composer --version
-          composer require --dev php-parallel-lint/php-console-highlighter
+          composer install
       - name: Check PHP Syntax
         run: |
            php -l index2.php
