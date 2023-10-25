@@ -1,3 +1,3 @@
 <?php
-echo pahpinfo()
+echo phpinfo();
 ?>
