@@ -26,7 +26,7 @@ jobs:
            composer require jakub-onderka/php-parallel-lint
       - name: Check PHP Syntax
         run: |
-          vendor/bin/parallel-lint .
+          vendor/bin/parallel-lint --exclude vendor --exclude scripts --exclude .git --exclude .github .
   Temporary-Server-Deployment:
     runs-on: ubuntu-latest
     needs: [Check-PHP-Syntax]
