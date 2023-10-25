@@ -52,7 +52,7 @@ jobs:
       uses: nothingalike/sns-publish-topic@v1.6
       with:
         MESSAGE: "Code is Deployed"
-        TOPIC_ARN: ${{ AWS_SNS_ARN }}
+        TOPIC_ARN: ${{ secrets.AWS_SNS_ARN }}
       env:
         AWS_REGION: ${{ secrets.AWS_REGION }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
